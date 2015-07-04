@@ -1,9 +1,17 @@
 'use strict';
 
-define(function(){
+define([
+    'lib/domNode'
+],
+function(
+    domNode
+){
 
     function AppView(){
-        this.el = document.createElement('div');
+        this.el = domNode({
+            type: 'div',
+            className: 'AppView'
+        });
     }
 
     AppView.prototype.render = function render(){
