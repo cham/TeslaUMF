@@ -22,20 +22,16 @@ describe('listing controller', function(){
     });
 
     describe('getIndex', function(){
-        var renderStub;
+        var endStub;
 
         beforeEach(function(){
-            res.render = renderStub = sandbox.stub();
+            res.end = endStub = sandbox.stub();
 
             listingController.getIndex({}, res);
         });
 
-        it('calls res.render once', function(){
-            expect(renderStub.calledOnce).toEqual(true);
-        });
-
-        it('sends the view name "index" to res.render', function(){
-            expect(renderStub.calledWith('index')).toEqual(true);
+        it('calls res.end once', function(){
+            expect(endStub.calledOnce).toEqual(true);
         });
     });
 });
