@@ -9,6 +9,7 @@
   <div id="mocha"></div>
   <script src="/js/vendor/jquery/dist/jquery.min.js"></script>
   <script src="/js/vendor/expectations/expectations.js"></script>
+  <script src="/js/vendor/sinonjs/sinon.js"></script>
   <script src="/js/vendor/mocha/mocha.js"></script>
   <script>
     var testFiles = [
