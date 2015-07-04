@@ -11,7 +11,7 @@ define(function(){
     };
 
     AppView.prototype.remove = function remove(){
-
+        this.el.remove();
     };
 
     return AppView;

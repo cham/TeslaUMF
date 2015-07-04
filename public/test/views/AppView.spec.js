@@ -6,6 +6,8 @@ function(
     AppView
 ){
 
+    var sandbox = sinon.sandbox.create();
+
     describe('AppView', function(){
         describe('definition', function(){
             it('is a function', function(){
@@ -35,6 +37,19 @@ function(
 
                 it('el is an instance of HTMLElement', function(){
                     expect(view.el instanceof HTMLElement).toEqual(true);
+                });
+            });
+
+            describe('remove', function(){
+                var removeStub;
+
+                beforeEach(function(){
+                    removeStub = sandbox.stub(view.el, 'remove');
+                    view.remove();
+                });
+
+                it('calls remove on it\'s el node once', function(){
+                    expect(removeStub.calledOnce).toEqual(true);
                 });
             });
         });
