@@ -38,8 +38,9 @@ function(
             sandbox.restore();
         });
 
-        after(function(){
+        after(function(done){
             appViewInstance.el.remove();
+            bogus.reset(done);
         });
 
         it('creates a single new AppView', function(){
