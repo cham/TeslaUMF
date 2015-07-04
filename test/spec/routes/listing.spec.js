@@ -31,11 +31,11 @@ describe('listing router', function(){
         expect(typeof listingRouter).toEqual('function');
     });
 
-    describe('get /', function(){
+    describe('get /api/1.0/threads', function(){
         beforeEach(function(){
             req = {
                 method: 'get',
-                url: '/'
+                url: '/api/1.0/threads'
             };
 
             router(req, res);

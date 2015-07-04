@@ -4,5 +4,5 @@ var listingController = require('../controllers/listing');
 
 module.exports = function(router){
     router
-        .get('/', listingController.getIndex);
+        .get('/api/1.0/threads', listingController.getIndex);
 };
