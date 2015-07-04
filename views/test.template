@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mocha Tests</title>
+  <link rel="stylesheet" href="/js/vendor/mocha/mocha.css">
+</head>
+<body>
+  <div id="mocha"></div>
+  <script src="/js/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="/js/vendor/expectations/expectations.js"></script>
+  <script src="/js/vendor/mocha/mocha.js"></script>
+  <script>
+    var testFiles = [
+{{#tests}}
+        '{{.}}',
+{{/tests}}
+    ];
+  </script>
+  <script type="text/javascript" data-main="/js/test" src="/js/vendor/requirejs/require.js"></script>
+</body>
+</html>
