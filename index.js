@@ -16,6 +16,9 @@ app.use(routemaster({
     Router: express.Router
 }));
 
+app.set('view engine', 'template');
+app.engine('template', require('hogan-express'));
+
 server.listen(serverPort, function(){
     console.info('UMF listening on port', serverPort);
 });
