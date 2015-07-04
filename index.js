@@ -2,12 +2,16 @@
 
 var express = require('express');
 var routemaster = require('routemaster');
-var http = require('http');
 var bodyParser = require('body-parser');
+
+var http = require('http');
+var path = require('path');
 
 var app = express();
 var server = http.createServer(app);
 var serverPort = 3200;
+
+app.use(express.static('public'));
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
