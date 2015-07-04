@@ -3,4 +3,5 @@
 node_modules
 npm_cache
 npm-debug.log
+public/js/vendor/
 
