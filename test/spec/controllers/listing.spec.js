@@ -22,20 +22,20 @@ describe('listing controller', function(){
     });
 
     describe('getIndex', function(){
-        var resSendStub;
+        var renderStub;
 
         beforeEach(function(){
-            res.send = resSendStub = sandbox.stub();
+            res.render = renderStub = sandbox.stub();
 
             listingController.getIndex({}, res);
         });
 
-        it('calls res.send once', function(){
-            expect(resSendStub.calledOnce).toEqual(true);
+        it('calls res.render once', function(){
+            expect(renderStub.calledOnce).toEqual(true);
         });
 
-        it('sends the text "index"', function(){
-            expect(resSendStub.calledWith('index')).toEqual(true);
+        it('sends the view name "index" to res.render', function(){
+            expect(renderStub.calledWith('index')).toEqual(true);
         });
     });
 });

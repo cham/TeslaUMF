@@ -1,7 +1,7 @@
 'use strict';
 
 function getIndex(req, res){
-    res.send('index');
+    res.render('index');
 }
 
 exports.getIndex = getIndex;
