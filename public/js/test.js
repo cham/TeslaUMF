@@ -1,14 +1,8 @@
 'use strict';
-define(function(){
-    require.config({
-        paths: {
-            'bogus': '/js/vendor/bogus/bogus'
-        }
-    });
-
+define(['requireConfig'], function(){
     mocha.setup('bdd');
     mocha.checkLeaks();
-    mocha.globals(['jQuery']);
+    mocha.globals(['jQuery', 'Hogan']);
 
     require(testFiles, function(){
         mocha.run();
