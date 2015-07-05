@@ -1,16 +1,7 @@
 'use strict';
 
-define([
-    'views/AppView'
-],
-function(
-    AppView
-){
+define(['requireConfig'], function(){
 
-    var view = new AppView();
-
-    document.body.appendChild(view.el);
-
-    view.render();
+    require(['app']);
 
 });
