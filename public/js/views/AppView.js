@@ -1,10 +1,12 @@
 'use strict';
 
 define([
-    'lib/domNode'
+    'lib/domNode',
+    'controllers/listing'
 ],
 function(
-    domNode
+    domNode,
+    listingController
 ){
 
     function AppView(){
@@ -15,10 +17,13 @@ function(
     }
 
     AppView.prototype.render = function render(){
+        this.el.innerHTML = '';
 
+        listingController.load(this.el);
     };
 
     AppView.prototype.remove = function remove(){
+        listingController.unload();
         this.el.remove();
     };
 

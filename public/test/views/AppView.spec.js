@@ -1,9 +1,12 @@
 'use strict';
+
 define([
-    'bogus'
+    'bogus',
+    'controllers/listing'
 ],
 function(
-    bogus
+    bogus,
+    listingController
 ){
 
     var sandbox = sinon.sandbox.create();
@@ -23,7 +26,13 @@ function(
         });
 
         beforeEach(function(){
+            sandbox.stub(listingController, 'load');
+            sandbox.stub(listingController, 'unload');
             domNodeStub.reset();
+        });
+
+        afterEach(function(){
+            sandbox.restore();
         });
 
         after(bogus.reset);
@@ -75,6 +84,26 @@ function(
                 });
             });
 
+            describe('render', function(){
+                beforeEach(function(){
+                    view.render();
+                });
+
+                it('empties the el', function(){
+                    view.el.appendChild(document.createElement('div'));
+                    view.render();
+                    expect(view.el.children.length).toEqual(0);
+                });
+
+                it('calls load on the listing controller', function(){
+                    expect(listingController.load.calledOnce).toEqual(true);
+                });
+
+                it('passes the view el to the load call', function(){
+                    expect(listingController.load.calledWith(view.el)).toEqual(true);
+                });
+            });
+
             describe('remove', function(){
                 var removeStub;
 
@@ -85,6 +114,10 @@ function(
 
                 it('calls remove on it\'s el node once', function(){
                     expect(removeStub.calledOnce).toEqual(true);
+                });
+
+                it('calls unload on the listing controller', function(){
+                    expect(listingController.unload.calledOnce).toEqual(true);
                 });
             });
         });
