@@ -15,7 +15,14 @@
     "body-parser": "1.13.1",
     "express": "4.13.0",
     "hogan-express": "0.5.2",
+    "indexjs": "0.3.0",
     "recursive-readdir": "1.2.1",
+    "request": "2.58.0",
     "routemaster": "0.2.1"
+  },
+  "devDependencies": {
+    "expectations": "0.5.1",
+    "mocha": "2.2.5",
+    "sandboxed-module": "2.0.2"
   }
 }
