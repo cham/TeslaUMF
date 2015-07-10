@@ -9,7 +9,13 @@ define(function(){
             'pubsub': '/js/vendor/pubsub-js/src/pubsub',
             'hogan': '/js/vendor/requirejs-hogan-plugin/hogan',
             'hgn': '/js/vendor/requirejs-hogan-plugin/hgn',
-            'text': '/js/vendor/requirejs-text/text'
+            'text': '/js/vendor/requirejs-text/text',
+            'fetch': '/js/vendor/fetch/fetch'
+        },
+        shim: {
+            'fetch': {
+                exports: 'fetch'
+            }
         }
     });
 
