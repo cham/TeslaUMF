@@ -1,12 +1,10 @@
 'use strict';
 
 define([
-    'pubsub',
     'fetch',
     'views/ListingView'
 ],
 function(
-    pubsub,
     fetch,
     ListingView
 ){
