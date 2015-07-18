@@ -8,6 +8,7 @@
   },
   "scripts": {
     "preinstall": "npm prune",
+    "postinstall": "bower install",
     "start": "node index",
     "test": "mocha"
   },
