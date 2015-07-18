@@ -1,63 +1,31 @@
 'use strict';
 define([
-    'bogus'
+    'controllers/listing'
 ],
 function(
-    bogus
+    listing
 ){
 
     var sandbox = sinon.sandbox.create();
+    var app;
 
     describe('app', function(){
-        var app;
-        var newAppViewStub;
-        var appViewInstance;
-        var appendChildSpy;
+        var listingLoadStub;
 
         before(function(done){
-            appViewInstance = {
-                render: sandbox.stub(),
-                el: document.createElement('div')
-            };
-
-            newAppViewStub = sandbox.stub().returns(appViewInstance);
-
-            bogus.stub('views/AppView', newAppViewStub);
-
-            bogus.requireWithStubs('app', function(module){
+            listingLoadStub = sandbox.stub(listing, 'load');
+            require(['app'], function(module){
                 app = module;
                 done();
             });
         });
 
-        beforeEach(function(){
-            appendChildSpy = sandbox.spy(HTMLElement.prototype, 'appendChild');
+        it('calls load on the listing controller once', function(){
+            expect(listingLoadStub.calledOnce).toEqual(true);
         });
 
-        afterEach(function(){
-            sandbox.restore();
-        });
-
-        after(function(done){
-            appViewInstance.el.remove();
-            bogus.reset(done);
-        });
-
-        it('creates a single new AppView', function(){
-            expect(newAppViewStub.calledOnce).toEqual(true);
-        });
-
-        it('appends the new AppView\'s el to the document body', function(){
-            var childNodes = Array.prototype.slice.call(document.body.children);
-            var elNodesInDocument = childNodes.filter(function(node){
-                return node === appViewInstance.el;
-            });
-
-            expect(elNodesInDocument.length).toEqual(1);
-        });
-
-        it('renders the new AppView once', function(){
-            expect(appViewInstance.render.calledOnce).toEqual(true);
+        it('passes the document body node with the load call', function(){
+            expect(listingLoadStub.calledWith(document.body)).toEqual(true);
         });
     });
 
