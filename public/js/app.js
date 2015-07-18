@@ -1,16 +1,12 @@
 'use strict';
 
 define([
-    'views/AppView'
+    'controllers/listing'
 ],
 function(
-    AppView
+    listing
 ){
 
-    var view = new AppView();
-
-    document.body.appendChild(view.el);
-
-    view.render();
+    listing.load(document.body);
 
 });
