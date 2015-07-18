@@ -1,12 +1,10 @@
 'use strict';
 
 define([
-    'bogus',
-    'pubsub'
+    'bogus'
 ],
 function(
-    bogus,
-    pubsub
+    bogus
 ){
 
     var sandbox = sinon.sandbox.create();
@@ -22,8 +20,7 @@ function(
         var fetchThenJsonStub;
         var fetchThenRenderStub;
         var responseJson;
-        var unsubscribeStub;
-        var subscribeStub;
+        var fakeBus;
 
         before(function(done){
             listingRemoveStub = sandbox.stub();
@@ -73,8 +70,11 @@ function(
         });
 
         beforeEach(function(){
-            unsubscribeStub = sandbox.stub(pubsub, 'unsubscribe');
-            subscribeStub = sandbox.stub(pubsub, 'subscribe');
+            fakeBus = {
+                on: sandbox.stub(),
+                off: sandbox.stub(),
+                emit: sandbox.stub()
+            };
         });
 
         afterEach(function(){
@@ -125,19 +125,10 @@ function(
             beforeEach(function(){
                 domNode = document.createElement('div');
                 appendStub = sandbox.stub(domNode, 'appendChild');
-                listingController.load(domNode);
-            });
-
-            it('unsubscribes to a single event on pubsub', function(){
-                expect(unsubscribeStub.calledOnce).toEqual(true);
-            });
-
-            it('unsubscribes to the "click:thread" event', function(){
-                expect(unsubscribeStub.calledWith('click:thread')).toEqual(true);
-            });
-
-            it('passes a function to unsubscribe from "click:event"', function(){
-                expect(typeof unsubscribeStub.args[0][1]).toEqual('function');
+                listingController.load({
+                    el: domNode,
+                    eventBus: fakeBus
+                });
             });
 
             it('creates a single new ListingView', function(){
@@ -151,10 +142,6 @@ function(
 
             it('passes an eventBus to ListingView', function(){
                 expect(typeof ListingView.args[0][0].eventBus).toBeDefined();
-            });
-
-            it('eventBus is pubsub', function(){
-                expect(ListingView.args[0][0].eventBus).toEqual(pubsub);
             });
 
             it('appends a single node to the dom node passed', function(){
@@ -208,85 +195,58 @@ function(
             });
 
             it('subscribes to a single event', function(){
-                expect(subscribeStub.calledOnce).toEqual(true);
+                expect(fakeBus.on.calledOnce).toEqual(true);
             });
 
             it('subscribes to the "click:thread" event', function(){
-                expect(subscribeStub.calledWith('click:thread')).toEqual(true);
+                expect(fakeBus.on.calledWith('click:thread')).toEqual(true);
             });
 
             it('binds a function to "click:thread"', function(){
-                expect(typeof subscribeStub.args[0][1]).toEqual('function');
-            });
-
-            it('binds the function it previously unbound to "click:thread"', function(){
-                expect(subscribeStub.args[0][1]).toEqual(unsubscribeStub.args[0][1]);
+                expect(typeof fakeBus.on.args[0][1]).toEqual('function');
             });
 
             describe('when click:thread is fired', function(){
-                var renderData;
-
                 beforeEach(function(){
                     fetchThenRenderStub.yield(responseJson);
                     listingRenderStub.reset();
 
-                    subscribeStub.yield(null, 3);
-
-                    renderData = listingRenderStub.args[0][0];
+                    fakeBus.on.yield(3);
                 });
 
-                it('renders the view once', function(){
-                    expect(listingRenderStub.calledOnce).toEqual(true);
+                it('emits a single event', function(){
+                    expect(fakeBus.emit.calledOnce).toEqual(true);
                 });
 
-                it('passes an object to view.render', function(){
-                    expect(typeof renderData).toEqual('object');
+                it('emits a "load:thread" event', function(){
+                    expect(fakeBus.emit.calledWith('load:thread')).toEqual(true);
                 });
 
-                it('the object contains a threads property', function(){
-                    expect(renderData.threads).toBeDefined();
-                });
-
-                it('threads is an array', function(){
-                    expect(Array.isArray(renderData.threads)).toEqual(true);
-                });
-
-                it('threads contains a single thread', function(){
-                    expect(renderData.threads.length).toEqual(1);
-                });
-
-                it('the thread is the one whose _id matched the id passed', function(){
-                    expect(renderData.threads[0]._id).toEqual(3);
+                it('passes the thread id with the "load:thread" event', function(){
+                    expect(fakeBus.emit.calledWith('load:thread', 3)).toEqual(true);
                 });
             });
         });
 
         describe('unload', function(){
             beforeEach(function(){
+                listingController.load({
+                    el: document.createElement('div'),
+                    eventBus: fakeBus
+                });
                 listingController.unload();
             });
 
-            it('unsubscribes to a single event on pubsub', function(){
-                expect(unsubscribeStub.calledOnce).toEqual(true);
+            it('unsubscribes to a single event', function(){
+                expect(fakeBus.off.calledOnce).toEqual(true);
             });
 
             it('unsubscribes to the "click:thread" event', function(){
-                expect(unsubscribeStub.calledWith('click:thread')).toEqual(true);
+                expect(fakeBus.off.calledWith('click:thread')).toEqual(true);
             });
 
-            it('passes a function to unsubscribe from "click:event"', function(){
-                expect(typeof unsubscribeStub.args[0][1]).toEqual('function');
-            });
-
-            describe('if there is a ListingView already', function(){
-                beforeEach(function(){
-                    listingController.load(document.createElement('div'));
-                    listingController.unload();
-                });
-
-                it('calls remove on the view', function(){
-                    expect(listingRemoveStub.calledOnce).toEqual(true);
-                });
+            it('calls remove on the view', function(){
+                expect(listingRemoveStub.calledOnce).toEqual(true);
             });
         });
     });

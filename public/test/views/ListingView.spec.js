@@ -27,7 +27,7 @@ function(
         beforeEach(function(){
             viewOptions = {
                 eventBus: {
-                    publish: sandbox.stub()
+                    emit: sandbox.stub()
                 }
             };
             domNodeStub.reset();
@@ -118,13 +118,13 @@ function(
 
                 describe('when the click listener fires', function(){
                     describe('if the event target has a class name of "thread-id"', function(){
-                        var publishStub;
+                        var emitStub;
 
                         beforeEach(function(){
                             var node = document.createElement('div');
                             node.className = 'thread-id';
 
-                            publishStub = viewOptions.eventBus.publish;
+                            emitStub = viewOptions.eventBus.emit;
 
                             view.clickListener({
                                 target: node
@@ -132,15 +132,15 @@ function(
                         });
 
                         it('publishes an event on the view\'s event bus', function(){
-                            expect(publishStub.calledOnce).toEqual(true);
+                            expect(emitStub.calledOnce).toEqual(true);
                         });
 
                         it('publishes a "click:thread" event', function(){
-                            expect(publishStub.calledWith('click:thread')).toEqual(true);
+                            expect(emitStub.calledWith('click:thread')).toEqual(true);
                         });
 
                         it('passes the view\'s innerHTML with the event', function(){
-                            expect(publishStub.args[0][1]).toEqual(view.el.innerHTML);
+                            expect(emitStub.args[0][1]).toEqual(view.el.innerHTML);
                         });
                     });
                 });

@@ -13,35 +13,41 @@ function(
 
     var data;
     var view;
+    var eventBus;
 
     function unload(){
-        pubsub.unsubscribe('click:thread', selectThread);
         data = undefined;
+        if(eventBus){
+            eventBus.off('click:thread');
+            eventBus = undefined;
+        }
         if(view){
             view.remove();
             view = undefined;
         }
     }
 
-    function selectThread(eventName, threadId){
-        var threads = data.threads;
-
-        view.render({
-            threads: threads.filter(function(threadData){
-                return threadData._id === threadId;
-            })
-        });
+    function requiredOptions(options){
+        if(!options.el){
+            throw new Error('listing controller requires el');
+        }
+        if(!options.eventBus){
+            throw new Error('listing controller requires eventBus');
+        }
     }
 
     return {
-        load: function(el){
+        load: function(options){
+            requiredOptions(options || {});
             unload();
 
+            eventBus = options.eventBus;
+
             view = new ListingView({
-                eventBus: pubsub
+                eventBus: eventBus
             });
 
-            el.appendChild(view.el);
+            options.el.appendChild(view.el);
 
             fetch('/api/1.0/threads')
                 .then(function(response){
@@ -52,7 +58,9 @@ function(
                     data = threadData;
                 });
 
-            pubsub.subscribe('click:thread', selectThread);
+            eventBus.on('click:thread', function(threadId){
+                eventBus.emit('load:thread', threadId);
+            });
         },
 
         unload: unload
