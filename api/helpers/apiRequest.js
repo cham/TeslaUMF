@@ -6,6 +6,8 @@ var apiRoot = 'http://localhost:3100';
 module.exports = function apiRequest(options){
     options.url = apiRoot + options.url;
 
+    console.log('request', options);
+
     return new Promise(function(resolve, reject){
         request(options, function(err, response, data){
             if(err){
