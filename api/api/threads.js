@@ -9,4 +9,12 @@ function getThreads(){
     });
 }
 
+function getThread(urlName){
+    return apiRequest({
+        method: 'get',
+        url: '/thread/' + urlName + '/complete'
+    });
+}
+
 exports.getThreads = getThreads;
+exports.getThread = getThread;
