@@ -24,6 +24,7 @@
   "devDependencies": {
     "expectations": "0.5.1",
     "mocha": "2.2.5",
-    "sandboxed-module": "2.0.2"
+    "sandboxed-module": "2.0.2",
+    "sinon": "1.15.4"
   }
 }
