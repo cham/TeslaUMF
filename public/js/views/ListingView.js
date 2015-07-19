@@ -11,7 +11,7 @@ function(
 
     function listenForClickEvents(view, eventBus){
         function clickListener(e){
-            if(e.target.className === 'thread-id'){
+            if(e.target.className === 'thread-urlname'){
                 eventBus.emit('click:thread', e.target.innerHTML);
             }
         }

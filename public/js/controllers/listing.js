@@ -52,8 +52,8 @@ function(
                     data = threadData;
                 });
 
-            eventBus.on('click:thread', function(threadId){
-                eventBus.emit('load:thread', threadId);
+            eventBus.on('click:thread', function(threadUrlName){
+                eventBus.emit('load:thread', threadUrlName);
             });
         },
 
