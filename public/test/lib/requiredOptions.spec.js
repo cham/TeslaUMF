@@ -5,15 +5,6 @@ define([
 function(
     requiredOptions
 ){
-/*
-    return function requiredOptions(options, id, required){
-        required.forEach(function(key){
-            if(!options[key]){
-                throw new Error(id + ' requires ' + key);
-            }
-        });
-    };
-*/
     var sandbox = sinon.sandbox.create();
 
     describe('requiredOptions', function(){
