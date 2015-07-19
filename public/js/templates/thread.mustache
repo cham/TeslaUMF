@@ -1,0 +1,21 @@
+  <div class="thread">
+    <div class="thread-details">
+      <p>
+        <b>{{name}}</b>
+      </p>
+      <p>
+        {{postedby}}
+      </p>
+      </p>
+    </div>
+    <div class="thread-urlname">{{urlname}}</div>
+  </div>
+{{#comments}}
+  <div class="comment">
+    <h4>{{postedby}}</h4>
+    <p>
+      <small>{{created}}</small>
+    </p>
+    {{{content}}}
+  </div>
+{{/comments}}
