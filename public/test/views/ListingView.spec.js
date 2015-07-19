@@ -117,12 +117,12 @@ function(
                 });
 
                 describe('when the click listener fires', function(){
-                    describe('if the event target has a class name of "thread-id"', function(){
+                    describe('if the event target has a class name of "thread-urlname"', function(){
                         var emitStub;
 
                         beforeEach(function(){
                             var node = document.createElement('div');
-                            node.className = 'thread-id';
+                            node.className = 'thread-urlname';
 
                             emitStub = viewOptions.eventBus.emit;
 
