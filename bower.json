@@ -19,7 +19,8 @@
   },
   "devDependencies": {
     "mocha": "git@github.com:mochajs/mocha.git#2.0.0",
-    "sinon": "http://sinonjs.org/releases/sinon-1.9.1.js",
-    "expectations": "0.2.6"
+    "expectations": "0.2.6",
+    "sinonjs": "1.14.1",
+    "bogus": "0.3.6"
   }
 }
