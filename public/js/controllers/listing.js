@@ -2,11 +2,13 @@
 
 define([
     'fetch',
-    'views/ListingView'
+    'views/ListingView',
+    'lib/requiredOptions'
 ],
 function(
     fetch,
-    ListingView
+    ListingView,
+    requiredOptions
 ){
 
     var data;
@@ -25,18 +27,12 @@ function(
         }
     }
 
-    function requiredOptions(options){
-        if(!options.el){
-            throw new Error('listing controller requires el');
-        }
-        if(!options.eventBus){
-            throw new Error('listing controller requires eventBus');
-        }
-    }
-
     return {
         load: function(options){
-            requiredOptions(options || {});
+            requiredOptions(options || {}, 'listing controller', [
+                'el',
+                'eventBus'
+            ]);
             unload();
 
             eventBus = options.eventBus;
